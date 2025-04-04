@@ -47,10 +47,15 @@ export default function Home() {
 
           {/* Navigation */}
           <div className="flex flex-col gap-4">
-            {["Home", "About me", "Projects", "Contact"].map((item) => (
-              <Link key={item} href={`/${item.toLowerCase().replace(" ", "-")}`} className="block">
+            {[
+              { name: "Home", path: "/" },
+              { name: "About me", path: "/aboutme" },
+              { name: "Projects", path: "/projects" },
+              { name: "Contact", path: "/contact" },
+            ].map((item) => (
+              <Link key={item.name} href={item.path} className="block">
                 <div className="green-button font-bold py-3 px-8">
-                  <span className="button-text text-center text-xl">{item}</span>
+                  <span className="button-text text-center text-xl">{item.name}</span>
                 </div>
               </Link>
             ))}
