@@ -41,7 +41,7 @@ export default function Portfolio() {
       title: "Forest Maze",
       type: "Level Design",
       tags: ["Adventure", "Puzzle", "Fantasy"],
-      image: "/placeholder.svg?height=300&width=600",
+      image: "/forestmaze.jpg?height=300&width=600",
       description:
         "An intricate forest maze level design with multiple paths and hidden secrets, challenging players to explore and discover.",
       focusPoints: [
@@ -58,7 +58,7 @@ export default function Portfolio() {
       title: "Quest System",
       type: "Game Design",
       tags: ["Narrative", "Branching", "Choices"],
-      image: "/placeholder.svg?height=300&width=600",
+      image: "/quest.png?height=300&width=600",
       description:
         "A branching quest system with multiple outcomes based on player choices, creating a personalized story experience.",
       focusPoints: [
