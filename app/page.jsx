@@ -1,9 +1,10 @@
 "use client"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { Linkedin, Instagram, Youtube } from "lucide-react"
 
 export default function Portfolio() {
+  const [activeSection, setActiveSection] = useState("home")
   const [selectedProject, setSelectedProject] = useState(null)
   const scrollContainerRef = useRef(null)
 
@@ -47,6 +48,34 @@ export default function Portfolio() {
     },
   ]
 
+  // Handle intersection observer to detect active section
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5,
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }, options)
+
+    // Observe all sections
+    document.querySelectorAll("section[id]").forEach((section) => {
+      observer.observe(section)
+    })
+
+    return () => {
+      document.querySelectorAll("section[id]").forEach((section) => {
+        observer.unobserve(section)
+      })
+    }
+  }, [])
+
   const handleProjectClick = (project) => {
     setSelectedProject(project.id === selectedProject ? null : project.id)
   }
@@ -78,27 +107,34 @@ export default function Portfolio() {
       />
 
       {/* Fixed navigation */}
-      <div className="fixed top-8 right-8 z-50">
-        <div className="flex flex-col gap-4">
-          {[
-            { name: "Home", section: "home" },
-            { name: "Projects", section: "projects" },
-            { name: "About me", section: "about" },
-            { name: "Contact", section: "contact" },
-          ].map((item) => (
-            <button key={item.name} onClick={() => scrollToSection(item.section)} className="block">
-              <div className="green-button font-bold py-3 px-8">
-                <span className="button-text text-center text-xl">{item.name}</span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
+      <nav className="fixed top-1/2 right-12 transform -translate-y-1/2 z-50 flex flex-col items-end space-y-6">
+        {[
+          { name: "Home", section: "home" },
+          { name: "Projects", section: "projects" },
+          { name: "About me", section: "about" },
+          { name: "Contact", section: "contact" },
+        ].map((item) => (
+          <button
+            key={item.name}
+            onClick={() => scrollToSection(item.section)}
+            className={`text-xl transition-all duration-300 relative bg-transparent border-none cursor-pointer ${activeSection === item.section ? "text-white font-bold text-2xl" : "text-gray-400 hover:text-white"
+              }`}
+          >
+            {item.name}
+            {activeSection === item.section && (
+              <div
+                className="absolute bottom-0 left-0 right-0 h-1 bg-green-500"
+                style={{ backgroundColor: "#00ff00" }}
+              ></div>
+            )}
+          </button>
+        ))}
+      </nav>
 
       {/* HOME SECTION */}
       <section id="home" className="min-h-screen relative flex items-center">
         <div className="container py-12 relative z-10">
-          <div className="flex flex-col md-flex-row items-center justify-between gap-8">
+          <div className="flex flex-col md-flex-row items-center justify-center gap-12">
             {/* Profile photo */}
             <div className="w-64 h-64 rounded-lg overflow-hidden">
               <Image
@@ -111,21 +147,9 @@ export default function Portfolio() {
             </div>
 
             {/* Name and skills */}
-            <div className="text-center md-text-left">
-              <h1 className="text-4xl font-bold mb-2">Hubert Piwowarski</h1>
-              <div className="green-underline w-full md-w-96 mb-8"></div>
-
-              <ul className="space-y-6 text-2xl">
-                <li className="flex items-center">
-                  <span className="green-bullet mr-4 text-3xl">•</span> UX/UI
-                </li>
-                <li className="flex items-center">
-                  <span className="green-bullet mr-4 text-3xl">•</span> Level design
-                </li>
-                <li className="flex items-center">
-                  <span className="green-bullet mr-4 text-3xl">•</span> Quest design
-                </li>
-              </ul>
+            <div className="text-center">
+              <h1 className="text-4xl font-bold mb-4">Hubert Piwowarski</h1>
+              <p className="text-xl">UX/UI - Quest design - Level design</p>
             </div>
           </div>
         </div>
