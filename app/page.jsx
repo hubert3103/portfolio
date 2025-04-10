@@ -294,7 +294,7 @@ export default function Portfolio() {
                     <ul className="list-none mb-4">
                       {project.focusPoints.map((point, i) => (
                         <li key={i} className="mb-2 flex items-start">
-                          <span className="mr-2 text-lg" style={{ color: "#00ff00" }}>
+                          <span className="mr-2 text-lg" style={{ color: "#00ff00", marginRight: "0.5rem" }}>
                             •
                           </span>
                           <span>{point}</span>
