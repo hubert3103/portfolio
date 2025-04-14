@@ -1,6 +1,7 @@
 "use client"
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
+import { motion } from "framer-motion";
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
@@ -9,14 +10,12 @@ export default function Portfolio() {
 
   // Reset paragraph refs array
   aboutParagraphRefs.current = []
-
   // Add to paragraph refs
   const addToAboutRefs = (el) => {
     if (el && !aboutParagraphRefs.current.includes(el)) {
       aboutParagraphRefs.current.push(el)
     }
   }
-
   // Sample project data
   const projects = [
     {
@@ -92,7 +91,6 @@ export default function Portfolio() {
       readMoreLink: "#",
     },
   ]
-
   // Handle intersection observer to detect active section
   useEffect(() => {
     const options = {
@@ -100,12 +98,10 @@ export default function Portfolio() {
       rootMargin: "-10% 0px", // Slightly adjust when the animation triggers
       threshold: 0.2, // Lower threshold for earlier detection
     }
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id)
-
           // Add animation for about section text
           if (entry.target.id === "about") {
             // Use requestAnimationFrame for smoother animation handling
@@ -121,19 +117,16 @@ export default function Portfolio() {
         }
       })
     }, options)
-
     // Observe all sections
     document.querySelectorAll("section[id]").forEach((section) => {
       observer.observe(section)
     })
-
     return () => {
       document.querySelectorAll("section[id]").forEach((section) => {
         observer.unobserve(section)
       })
     }
   }, [])
-
   // Function to animate about text paragraphs
   const animateAboutText = (isVisible) => {
     aboutParagraphRefs.current.forEach((paragraph, index) => {
@@ -151,14 +144,12 @@ export default function Portfolio() {
       }, 120 * index) // Slightly reduced delay between paragraphs
     })
   }
-
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId)
     if (section) {
       section.scrollIntoView({ behavior: "smooth" })
     }
   }
-
   return (
     <main className="relative">
       {/* Geometric background pattern */}
@@ -170,7 +161,6 @@ export default function Portfolio() {
           backgroundPosition: "center",
         }}
       />
-
       {/* Fixed navigation with social icons - Centered vertically with icons below */}
       <nav className="fixed top-1/2 right-12 transform -translate-y-1/2 flex flex-col items-end z-50">
         <div className="flex flex-col items-end">
@@ -197,7 +187,6 @@ export default function Portfolio() {
               </button>
             ))}
           </div>
-
           {/* Social icons - Below menu items */}
           <div className="flex flex-col items-end space-y-4">
             {/* LinkedIn */}
@@ -212,7 +201,6 @@ export default function Portfolio() {
                 <path d="M19 3H5C3.895 3 3 3.895 3 5V19C3 20.105 3.895 21 5 21H19C20.105 21 21 20.105 21 19V5C21 3.895 20.105 3 19 3ZM9 17H6.477V10H9V17ZM7.694 8.717C6.923 8.717 6.408 8.203 6.408 7.517C6.408 6.831 6.922 6.317 7.779 6.317C8.55 6.317 9.065 6.831 9.065 7.517C9.065 8.203 8.551 8.717 7.694 8.717ZM18 17H15.558V13.174C15.558 12.116 14.907 11.872 14.663 11.872C14.419 11.872 13.605 12.035 13.605 13.174C13.605 13.337 13.605 17 13.605 17H11.082V10H13.605V10.977C13.93 10.407 14.581 10 15.802 10C17.023 10 18 10.977 18 13.174V17Z" />
               </svg>
             </a>
-
             {/* Instagram */}
             <a
               href="https://instagram.com/hubert_piwowarski"
@@ -227,7 +215,6 @@ export default function Portfolio() {
                 <circle cx="17.5" cy="6.5" r="1.5" fill="black" />
               </svg>
             </a>
-
             {/* YouTube */}
             <a
               href="https://youtube.com/@hubertpiwowarski"
@@ -243,23 +230,42 @@ export default function Portfolio() {
           </div>
         </div>
       </nav>
-
       {/* HOME SECTION - Updated to match the new design */}
       <section id="home" className="min-h-screen relative flex items-center justify-center">
         <div className="container py-12 relative z-10">
           <div className="flex flex-col items-center justify-center text-center">
-            <h1 className="text-4xl font-bold mb-2">Hubert Piwowarski</h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="text-4xl font-bold mb-2"
+            >
+              Hubert Piwowarski
+            </motion.h1>
             <div className="w-64 h-1 mb-4" style={{ backgroundColor: "#00ff00" }}></div>
-            <p className="text-xl">UX/UI - Quest design - Level design</p>
+            <motion.p
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="text-xl"
+            >
+              UX/UI - Quest design - Level design
+            </motion.p>
           </div>
         </div>
       </section>
-
       {/* PROJECTS SECTION */}
       <section id="projects" className="min-h-screen relative">
         <div className="container py-12 relative z-10">
           {projects.map((project, index) => (
-            <div key={project.id} className="mb-16">
+            <motion.div
+              key={project.id}
+              className="mb-16"
+              initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
               {/* Project header */}
               <div className="text-center mb-4">
                 <div className="w-64 h-1 mx-auto mb-4" style={{ backgroundColor: "#00ff00" }}></div>
@@ -268,7 +274,6 @@ export default function Portfolio() {
                 </h2>
                 <p className="text-gray-400">{project.tags.join(" | ")}</p>
               </div>
-
               {/* Project image */}
               <div className="w-full mb-1 overflow-hidden">
                 <Image
@@ -279,17 +284,14 @@ export default function Portfolio() {
                   className="w-full object-cover"
                 />
               </div>
-
               {/* Green separator line */}
               <div className="w-full h-0.5 mb-6" style={{ backgroundColor: "#00ff00" }}></div>
-
               {/* Project content - Two column layout with forced display */}
               <div className="max-w-4xl mx-auto">
                 <div className="flex flex-row" style={{ display: "flex !important", flexDirection: "row !important" }}>
                   {/* Left column - Project description */}
                   <div className="flex-1" style={{ flex: "1 1 auto !important" }}>
                     <p className="mb-4">{project.description}</p>
-
                     <p className="mb-2">For this project, I focused on:</p>
                     <ul className="list-none mb-4">
                       {project.focusPoints.map((point, i) => (
@@ -301,9 +303,7 @@ export default function Portfolio() {
                         </li>
                       ))}
                     </ul>
-
                     <p className="mb-6">{project.inspiration}</p>
-
                     <a
                       href={project.readMoreLink}
                       className="inline-block font-medium hover:underline"
@@ -312,7 +312,6 @@ export default function Portfolio() {
                       Read more
                     </a>
                   </div>
-
                   {/* Right column - Skills - COMPLETELY REDESIGNED */}
                   <div style={{ width: "320px", flexShrink: 0, marginLeft: "2rem" }} className="skills-v34-redesign">
                     <div
@@ -340,7 +339,6 @@ export default function Portfolio() {
                       >
                         Skills
                       </h3>
-
                       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                         {project.skills.map((skill, i) => (
                           <div key={i} style={{ marginBottom: "4px" }}>
@@ -362,7 +360,6 @@ export default function Portfolio() {
                                   (skill.level === "Intermediate" && dotIndex <= 1) ||
                                   (skill.level === "Advanced" && dotIndex <= 2) ||
                                   (skill.level === "Expert" && dotIndex <= 3)
-
                                 return (
                                   <div
                                     key={dotIndex}
@@ -384,78 +381,72 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
-
               {/* Add spacing between projects */}
               {index < projects.length - 1 && <div className="w-full h-px my-16 bg-gray-800"></div>}
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
-
       {/* ABOUT ME SECTION - With text columns of 12 words per row */}
       <section id="about" className="min-h-screen relative flex items-center">
         <div className="container py-12 relative z-10">
-          <div className="flex flex-row items-start gap-12 max-w-4xl mx-auto">
-            {/* Profile photo - Left side */}
-            <div className="w-64 h-64 rounded-lg overflow-hidden" style={{ minWidth: "256px" }}>
-              <Image
-                src="/profilepic.jpg"
-                alt="Profile photo"
-                width={256}
-                height={256}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* About me content - Right side */}
-            <div>
-              {/* Green line at top */}
-              <div className="w-full max-w-md h-1 mb-8" style={{ backgroundColor: "#00ff00" }}></div>
-
-              {/* About me text with columns of 12 words per row */}
-              <div className="twelve-words-container">
-                <p
-                  ref={addToAboutRefs}
-                  className="mb-6 twelve-words-text"
-                  style={{ opacity: 0, transition: "opacity 800ms ease" }}
-                >
-                  Hi! I'm Hubert Piwowarski, and I have a deep passion for gaming and game development. Since childhood,
-                  I've been fascinated by the immersive worlds games can create, which led me to explore UX/UI, level
-                  design, and quest design.
-                </p>
-
-                <p
-                  ref={addToAboutRefs}
-                  className="mb-6 twelve-words-text"
-                  style={{ opacity: 0, transition: "opacity 800ms ease" }}
-                >
-                  I'm also a big fan of fantasy stories—especially the works of Tolkien and Sapkowski—as well as anime,
-                  manga, and tabletop RPGs like Dungeons & Dragons. These influences fuel my creativity and shape how I
-                  approach storytelling in games.
-                </p>
-
-                <p
-                  ref={addToAboutRefs}
-                  className="mb-6 twelve-words-text"
-                  style={{ opacity: 0, transition: "opacity 800ms ease" }}
-                >
-                  My goal is to craft meaningful, engaging experiences—whether through intuitive UI, compelling quests,
-                  or rich environments.
-                </p>
-
-                <p
-                  ref={addToAboutRefs}
-                  className="twelve-words-text"
-                  style={{ opacity: 0, transition: "opacity 800ms ease" }}
-                >
-                  Ready to team up on something awesome? Let's connect!
-                </p>
+          <div className="flex justify-center">
+            <div className="flex flex-row items-start gap-12 max-w-4xl mx-auto">
+              {/* Profile photo - Left side */}
+              <div className="w-64 h-100 rounded-lg overflow-hidden" style={{ minWidth: "256px" }}>
+                <Image
+                  src="/profilepic.jpg"
+                  alt="Profile photo"
+                  width={256}
+                  height={420}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* About me content - Right side */}
+              <div>
+                {/* Green line at top */}
+                <div className="w-full max-w-md h-1 mb-8" style={{ backgroundColor: "#00ff00" }}></div>
+                {/* About me text with columns of 12 words per row */}
+                <div className="twelve-words-container">
+                  <p
+                    ref={addToAboutRefs}
+                    className="mb-6 twelve-words-text"
+                    style={{ opacity: 0, transition: "opacity 800ms ease" }}
+                  >
+                    Hi! I'm Hubert Piwowarski, and I have a deep passion for gaming and game development. Since childhood,
+                    I've been fascinated by the immersive worlds games can create, which led me to explore UX/UI, level
+                    design, and quest design.
+                  </p>
+                  <p
+                    ref={addToAboutRefs}
+                    className="mb-6 twelve-words-text"
+                    style={{ opacity: 0, transition: "opacity 800ms ease" }}
+                  >
+                    I'm also a big fan of fantasy stories—especially the works of Tolkien and Sapkowski—as well as anime,
+                    manga, and tabletop RPGs like Dungeons & Dragons. These influences fuel my creativity and shape how I
+                    approach storytelling in games.
+                  </p>
+                  <p
+                    ref={addToAboutRefs}
+                    className="mb-6 twelve-words-text"
+                    style={{ opacity: 0, transition: "opacity 800ms ease" }}
+                  >
+                    My goal is to craft meaningful, engaging experiences—whether through intuitive UI, compelling quests,
+                    or rich environments.
+                  </p>
+                  <p
+                    ref={addToAboutRefs}
+                    className="twelve-words-text"
+                    style={{ opacity: 0, transition: "opacity 800ms ease" }}
+                  >
+                    Ready to team up on something awesome? Let's connect!
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
       {/* Custom styles */}
       <style jsx>{`
         .hide-scrollbar::-webkit-scrollbar {
@@ -473,14 +464,12 @@ export default function Portfolio() {
           font-size: 1rem;
           line-height: 1.8;
         }
-
         .skills-v34-redesign h3 {
           display: inline-block !important;
           margin-left: auto !important;
           margin-right: auto !important;
           width: auto !important;
         }
-
         .skills-v34-redesign {
           display: block !important;
         }
