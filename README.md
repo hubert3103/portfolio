@@ -54,25 +54,26 @@ A modern, responsive portfolio website showcasing UX/UI design, level design, an
 
 ## 📁 Project Structure
 
-\`\`\`
+```plaintext
+
 portfolio/
 ├── app/
-│   ├── globals.css          # Global styles and Tailwind CSS
-│   ├── layout.jsx           # Root layout component
-│   ├── page.jsx             # Main portfolio page
-│   ├── about-me/page.jsx    # Redirect to about section
-│   ├── projects/page.jsx    # Redirect to projects section
-│   └── contact/page.jsx     # Redirect to contact section
+│   ├── globals.css           # Global styles and Tailwind CSS
+│   ├── layout.jsx            # Root layout component
+│   ├── page.jsx              # Main portfolio page
+│   ├── about-me/page.jsx     # Redirect to about section
+│   ├── projects/page.jsx     # Redirect to projects section
+│   └── contact/page.jsx      # Redirect to contact section
 ├── public/
-│   ├── background.png       # Background pattern image
-│   ├── profilepic.jpg       # Profile photo
-│   ├── neondusk.jpg         # Project image
-│   ├── forestmaze.jpg       # Project image
-│   └── quest.png            # Project image
-├── tailwind.config.js       # Tailwind CSS configuration
-├── next.config.mjs          # Next.js configuration
-└── README.md               # Project documentation
-\`\`\`
+│   ├── background.png        # Background pattern image
+│   ├── profilepic.jpg        # Profile photo
+│   ├── neondusk.jpg          # Project image
+│   ├── forestmaze.jpg        # Project image
+│   └── quest.png             # Project image
+├── tailwind.config.js        # Tailwind CSS configuration
+├── next.config.mjs           # Next.js configuration
+└── README.md                 # Project documentation
+
 
 ## 🎨 Customization
 
